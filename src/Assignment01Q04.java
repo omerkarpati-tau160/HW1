@@ -3,9 +3,38 @@ import java.util.Arrays;
 public class Assignment01Q04 {
 
     public static int[] shiftArrayCyclic(int[] array, int move, char direction) {
-        // TODO: implement
+    if (direction != 'R' && direction != 'L') {
         return array;
     }
+    int n = array.length;
+    if (n == 0) {
+        return array;
+    }
+
+    int k = move % n;
+    if (direction == 'L') {
+        k = -k;
+    }
+    k = ((k % n) + n) % n;   // right shift in [0, n-1]
+    if (k == 0) {
+        return array;
+    }
+
+    reverse(array, 0, n - 1);
+    reverse(array, 0, k - 1);
+    reverse(array, k, n - 1);
+    return array;
+}
+
+private static void reverse(int[] array, int from, int to) {
+    while (from < to) {
+        int tmp = array[from];
+        array[from] = array[to];
+        array[to] = tmp;
+        from++;
+        to--;
+    }
+}
 
     public static void main(String[] args) {
         System.out.println(Arrays.toString(
